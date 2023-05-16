@@ -34,7 +34,6 @@ const posts = [];
 
 app.get("/", async(req, res)=>{
   const posts = await Blog.find({}).exec();
-  console.log(posts);
   res.render("home", {homeStartingContent: homeStartingContent,posts: posts});
 })
 
@@ -56,29 +55,9 @@ app.post("/compose", (req,res)=>{
   res.redirect('/');
 })
 
-// app.get("/posts/:post", (req, res)=>{
-//   posts.forEach((post)=>{
-//     var url_id = lodash.lowerCase(req.params.post);
-//     if(lodash.lowerCase(post.title) == url_id)
-//       res.render("post", {title: post.title, content: post.content});
-//   })
-// })
-
-
-// app.get("/posts/:post", (req, res)=>{
-//   var url_id = lodash.lowerCase(req.params.post);
-//   Blog.findOne({title: url_id}, (err, post)=>{
-//     if(!post)
-//       res.send("No post found");
-//     else
-//       res.render("post", {title: post.title, content: post.post});
-// })
-// });
-
 app.get("/posts/:post", async(req, res)=>{
   var url_id = lodash.capitalize(req.params.post);
   const post = await Blog.findOne({title: url_id}).exec();
-  console.log(post);
     if(!post)
       res.send("No post found");
     else
